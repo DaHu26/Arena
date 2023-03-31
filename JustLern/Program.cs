@@ -1,8 +1,4 @@
-﻿
-using System.Drawing;
-using System;
-
-Fighter[] fighters = new Fighter[] { new Fighter("Max", 20, 100), new Fighter("Stas", 15, 100), new Fighter("Artem", 21, 100) };
+﻿Fighter[] fighters = new Fighter[] { new Fighter("Max", 20, 100), new Fighter("Stas", 15, 100), new Fighter("Artem", 21, 100) };
 
 Arena arena1 = new Arena(3);
 
@@ -44,34 +40,24 @@ class Arena
 
         while (CheckFightersHealth(fighters))
         {
-
-            var firstFighter = _random.Next(0, fighters.Length);
-            var secondFighter = _random.Next(0, fighters.Length);
-            var thirdFighter = _random.Next(0, fighters.Length);
-
-            var firstVictim = _random.Next(0, fighters.Length);
-            var secondVictim = _random.Next(0, fighters.Length);
-            var thirdVictim = _random.Next(0, fighters.Length);
-
-            while (firstVictim == firstFighter)
+            for (int i = 0; i < Size; i++)
             {
-                firstVictim = _random.Next(0, fighters.Length);
+                var fighter = _random.Next(fighters.Length);
+                var victim = _random.Next(fighters.Length);
+                while (victim == fighter)
+                {
+                    victim = _random.Next(fighters.Length);
+                }
+                fighters[victim].Health -= fighters[fighter].Damage;
             }
 
-            while (secondVictim == secondFighter)
+            var fightersStatStr = string.Empty;
+            foreach (var fighter in fighters)
             {
-                secondVictim = _random.Next(0, fighters.Length);
+                fightersStatStr += $"Здоровье {fighter.Name}: {fighter.Health}. ";
             }
 
-            while (thirdVictim == thirdFighter)
-            {
-                thirdVictim = _random.Next(0, fighters.Length);
-            }
-
-            fighters[firstVictim].Health -= fighters[firstFighter].Damage;
-            fighters[secondVictim].Health -= fighters[secondFighter].Damage;
-            fighters[thirdVictim].Health -= fighters[thirdFighter].Damage;
-            Console.WriteLine($"Здоровье Макса: {fighters[0].Health}, здоровье Стаса: {fighters[1].Health}, здоровье Артема: {fighters[2].Health}");
+            Console.WriteLine(fightersStatStr);
         }
     }
 
