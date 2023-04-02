@@ -9,3 +9,4 @@ var fighters = new List<Fighter>
 
 var arena1 = new Arena(3);
 arena1.Fight(fighters);
+var car = 1;
